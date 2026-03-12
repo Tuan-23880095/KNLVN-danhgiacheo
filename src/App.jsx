@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle, AlertCircle, Loader2, ChevronDown, ChevronUp, Info } from 'lucide-react';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzg6-KGrM7cJLbxM4VhaKuUDBlcALrzP1ww61JpMwExNSln9uw_JMfuPn3rwE6D1MfOIQ/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBPRlkjpMLDctdm2Uk7aYex_P6Cx0uhIdUmwOcYEm9C7JDe5OH92FiWEn6Nz1HNenY-A/exec';
 
 const LOP_HOC = [
   { id: 'T6', name: 'Sáng Thứ 6 (T6-0xx)', maxGroup: 9 },
@@ -125,24 +125,29 @@ export default function App() {
 
     const tongDiem = calculateTotal();
 
-    const submitData = new FormData();
-    submitData.append('Lop', formData.lop === 'T6' ? 'Sáng Thứ 6' : 'Sáng Thứ 7');
-    submitData.append('Nhom', `Nhóm ${formData.nhom}`);
-    submitData.append('Nguoi_Danh_Gia', formData.hoTen);
-    submitData.append('Nguoi_Duoc_Danh_Gia', formData.hoTenDuocDanhGia);
-    submitData.append('Tham_Du_20', formData.diem.tc1);
-    submitData.append('Quan_Ly_20', formData.diem.tc2);
-    submitData.append('Giao_Tiep_20', formData.diem.tc3);
-    submitData.append('Giai_Quyet_VD_15', formData.diem.tc4);
-    submitData.append('Noi_Dung_25', formData.diem.tc5);
-    submitData.append('Tong_Diem_Phan_Tram', tongDiem + '%');
-    submitData.append('Nhan_Xet', formData.nhanXet || 'Không có');
-    submitData.append('SheetName', 'DanhGiaCheoKNLVN'); // Tên sheet Google
+    const submitData = {
+      action: 'save_danh_gia_cheo',
+      Lop: formData.lop === 'T6' ? 'Sáng Thứ 6' : 'Sáng Thứ 7',
+      Nhom: `Nhóm ${formData.nhom}`,
+      Nguoi_Danh_Gia: formData.hoTen,
+      Nguoi_Duoc_Danh_Gia: formData.hoTenDuocDanhGia,
+      Tham_Du_20: formData.diem.tc1,
+      Quan_Ly_20: formData.diem.tc2,
+      Giao_Tiep_20: formData.diem.tc3,
+      Giai_Quyet_VD_15: formData.diem.tc4,
+      Noi_Dung_25: formData.diem.tc5,
+      Tong_Diem_Phan_Tram: tongDiem + '%',
+      Nhan_Xet: formData.nhanXet || 'Không có',
+      SheetName: 'DanhGiaCheoKNLVN'
+    };
 
     try {
       await fetch(SCRIPT_URL, {
         method: 'POST',
-        body: submitData,
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8',
+        },
+        body: JSON.stringify(submitData),
         mode: 'no-cors'
       });
       
