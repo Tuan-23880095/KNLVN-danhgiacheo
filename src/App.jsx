@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle, AlertCircle, Loader2, ChevronDown, ChevronUp, Info } from 'lucide-react';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBPRlkjpMLDctdm2Uk7aYex_P6Cx0uhIdUmwOcYEm9C7JDe5OH92FiWEn6Nz1HNenY-A/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzg6-KGrM7cJLbxM4VhaKuUDBlcALrzP1ww61JpMwExNSln9uw_JMfuPn3rwE6D1MfOIQ/exec';
 
 const LOP_HOC = [
   { id: 'T6', name: 'Sáng Thứ 6 (T6-0xx)', maxGroup: 9 },
